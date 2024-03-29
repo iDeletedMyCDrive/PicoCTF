@@ -7,17 +7,20 @@ Exploit a web application that only accepts `.png` files to achieve Remote Code 
 
 ### 1. Initial Observation:
 - Accessed the website which prompted for a `.png` file upload.
-- Screenshot:![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/ab871f28-4dec-44a9-a3fe-3aae2b6af7eb)
+- Screenshot:
+- ![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/ab871f28-4dec-44a9-a3fe-3aae2b6af7eb)
 
 ### 2. Dir busting
 - `gobuster dir -u http://gobuster dir -u http://atlas.picoctf.net:62175/ -w /opt/SecLists/Discovery/Web-Content/raft-small-words.txt`
 - Output
-	- ![[Pasted image 20240315193009.png]]
+	- ![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/63135799-205b-4592-af6b-2623e4bd36b6)
+
 
 ### 3. File Preparation and Magic Number Manipulation:
 - Downloaded a random image from the internet to use as a base.
 - Altered the magic number in the file to match a PNG file.
-- Screenshot of modified magic number: [Magic Number Modification]![[Pasted image 20240315190323.png]]
+- Screenshot of modified magic number: ![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/8ec9cbff-3104-42f8-9a26-4d4253e799bb)
+
 - _Note: The magic number (file signature) was altered to bypass file type checks by the website._
 
 
@@ -29,12 +32,14 @@ Exploit a web application that only accepts `.png` files to achieve Remote Code 
 
 ### 5. Accessing the Uploaded File and Testing RCE:
 - Navigated to the uploaded file’s URL: `atlas.picoctf.net:63517/uploads/PNG.png.php`
-- Screenshots of the uploaded file in action: [File Location] ![[Pasted image 20240315191200.png]], 
+- Screenshots of the uploaded file in action: [File Location] ![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/1e409c34-9675-41a0-8221-15fba59302db)
+, 
 - Confirmed RCE by executing a test command (`cat /etc/passwd`):
   ```
   atlas.picoctf.net:63517/uploads/PNG.png.php?cmd=cat /etc/passwd
   ```
-- Screenshot of test command execution: [Test Command Execution![[Pasted image 20240315191311.png]]
+- Screenshot of test command execution: ![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/fb36784f-8d9b-4557-864a-67f9673f595c)
+
 
 ### 6. Exploring the Server:
 - Used the `pwd` command to print the current working directory, revealing the path: `/var/www/html/uploads`
@@ -44,11 +49,13 @@ Exploit a web application that only accepts `.png` files to achieve Remote Code 
 ### 7. Listing Directory Contents:
 - Listed directories in `/var/www/html`, identifying a file named `GNTDOMBWGIZDE.txt` as potentially interesting.
 - Screenshot of directory listing: [Directory Listing]
-- ![[Pasted image 20240315191622.png]]
+-![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/b9b50b6d-8062-43f0-86c3-70c38d8d1338)
+
 
 ### 8. Accessing the Identified File:
 - Decided to investigate the `GNTDOMBWGIZDE.txt` file.
-- Screenshot of the file's contents: [File Contents ![[Pasted image 20240315191801.png]]
+- Screenshot of the file's contents: ![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/8386e426-67fc-4dd5-9378-5c7b370b4cc7)
+
 
 **Conclusion:** 
 Successfully achieved RCE by manipulating an image file’s magic number and embedding PHP code, allowing exploration of the server and identification of potential points of interest.
