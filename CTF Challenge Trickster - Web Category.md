@@ -7,7 +7,8 @@ Exploit a web application that only accepts `.png` files to achieve Remote Code 
 
 ### 1. Initial Observation:
 - Accessed the website which prompted for a `.png` file upload.
-- Screenshot: [Initial Website View]![[Pasted image 20240315190122.png]]
+- Screenshot:![image](https://github.com/iDeletedMyCDrive/PicoCTF/assets/163599712/ab871f28-4dec-44a9-a3fe-3aae2b6af7eb)
+
 ### 2. Dir busting
 - `gobuster dir -u http://gobuster dir -u http://atlas.picoctf.net:62175/ -w /opt/SecLists/Discovery/Web-Content/raft-small-words.txt`
 - Output
